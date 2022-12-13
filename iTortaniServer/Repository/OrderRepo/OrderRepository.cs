@@ -20,6 +20,12 @@ namespace iTortaniServer.Repository
             return order;
         }
 
+        public async Task DeleteAll()
+        {
+            _context.Orders.ExecuteDelete();
+            await _context.SaveChangesAsync();
+        }
+
         public async Task Delete(int id)
         {
             var orderToDelete = await _context.Orders.FindAsync(id);
@@ -56,6 +62,43 @@ namespace iTortaniServer.Repository
 
             return result;
 
+        }
+
+        public async Task<IEnumerable<Order>> searchSpecificOrder(string nomeCliente, string cellNumber)
+        {
+            LinkedList<Order> result = new LinkedList<Order>();
+            List<Order> list = await _context.Orders.ToListAsync();
+
+            foreach (Order order in list)
+            {
+                if (order.Cliente.ToLower().Contains(nomeCliente.ToLower()))
+                {
+                    result.AddLast(order);
+                }
+                else if(order.CellNum.ToString().ToLower().Contains(cellNumber.ToLower())){
+                    result.AddLast(order);
+                }
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<Order>> searchOrdersByDate(DateTime date)
+        {
+            LinkedList<Order> result = new LinkedList<Order>();
+            List<Order> list = await _context.Orders.ToListAsync();
+
+            foreach (Order order in list)
+            {
+                if (order.DataRitiro.Year.Equals(date.Year) && 
+                    order.DataRitiro.Month.Equals(date.Month) && 
+                    order.DataRitiro.Day.Equals(date.Day))
+                {
+                    result.AddLast(order);
+                }
+            }
+
+            return result;
         }
 
         public async Task Update(Order order)

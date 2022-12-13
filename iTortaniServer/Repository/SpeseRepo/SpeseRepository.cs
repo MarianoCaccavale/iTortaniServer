@@ -63,5 +63,49 @@ namespace iTortaniServer.Repository.SpeseRepo
             _context.Entry(spesa).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteAll()
+        {
+            _context.Spese.ExecuteDelete();
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Spese>> searchSpecificSpesa(string nomeCliente, string cellNumber)
+        {
+            LinkedList<Spese> result = new LinkedList<Spese>();
+            List<Spese> list = await _context.Spese.ToListAsync();
+
+            foreach (Spese spese in list)
+            {
+                if (spese.Cliente.ToLower().Contains(nomeCliente.ToLower()))
+                {
+                    result.AddLast(spese);
+                }
+                else if (spese.CellNum.ToString().ToLower().Contains(cellNumber.ToLower()))
+                {
+                    result.AddLast(spese);
+                }
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<Spese>> searchSpeseByDate(DateTime date)
+        {
+            LinkedList<Spese> result = new LinkedList<Spese>();
+            List<Spese> list = await _context.Spese.ToListAsync();
+
+            foreach (Spese spesa in list)
+            {
+                if (spesa.DataRitiro.Year.Equals(date.Year) &&
+                    spesa.DataRitiro.Month.Equals(date.Month) &&
+                    spesa.DataRitiro.Day.Equals(date.Day))
+                {
+                    result.AddLast(spesa);
+                }
+            }
+
+            return result;
+        }
     }
 }

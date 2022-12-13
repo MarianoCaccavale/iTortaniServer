@@ -48,8 +48,15 @@ namespace iTortaniServer.Controllers
             return NoContent();
         }
 
+        [HttpDelete]
+        public async Task<ActionResult> DeleteAll()
+        {
+            await _repository.DeleteAll();
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> DeleteSpesa(int id)
         {
             var spesaToDelete = await _repository.Get(id);
             if (spesaToDelete == null)
@@ -61,8 +68,21 @@ namespace iTortaniServer.Controllers
         }
 
         [HttpGet("search/{nomeCliente}")]
-        public async Task<IEnumerable<Spese>> searchOrder(string nomeCliente) {
+        public async Task<IEnumerable<Spese>> searchOrder(string nomeCliente = "") {
             return await _repository.searchOrder(nomeCliente.ToLower());
         }
+
+        [HttpGet("search/{nomeCliente}&{cellNumber}")]
+        public async Task<IEnumerable<Spese>> searchSpecificSpesa(string nomeClient = "", string cellNumber = "")
+        {
+            return await _repository.searchSpecificSpesa(nomeClient, cellNumber);
+        }
+
+        [HttpGet("search/{data}")]
+        public async Task<IEnumerable<Spese>> searchSpeseByDate(string data = "")
+        {
+            return await _repository.searchSpeseByDate(Convert.ToDateTime(data));
+        }
+
     }
 }
