@@ -15,72 +15,115 @@ namespace iTortaniServer.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Order>> GetOrders()
+        public class GetOrdersModel
+        {
+            public String accessToken { get; set; }
+        }
+
+        [HttpPost]
+        [Route("get_orders")]
+        public async Task<IEnumerable<Order>> GetOrders(GetOrdersModel model)
         {
             return await _repository.GetAll();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public class GetOrderModel
         {
-            return await _repository.Get(id);
+            public String accessToken { get; set; }
+            public int id { get; set; }
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder([FromBody] Order order)
+        [Route("get_order")]
+        public async Task<ActionResult<Order>> GetOrder(GetOrderModel model)
         {
-            var newOrder = await _repository.Create(order);
+            return await _repository.Get(model.id);
+        }
+
+        public class PostOrderModel
+        {
+            public String accessToken { get; set; }
+            public Order order { get; set; }
+        }
+
+        [HttpPost]
+        [Route("insert_order")]
+        public async Task<ActionResult<Order>> PostOrder(PostOrderModel model)
+        {
+            var newOrder = await _repository.Create(model.order);
             return CreatedAtAction(nameof(GetOrders), new { id = newOrder.Id}, newOrder);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> PutOrder(int id, [FromBody] Order order)
+        public class PutOrderModel
         {
-            if (id != order.Id)
-            {
-                return BadRequest();
-            }
+            public String accessToken { get; set; }
+            public Order order { get; set; }
+        }
 
-            await _repository.Update(order);
-
+        [HttpPost]
+        [Route("update_order")]
+        public async Task<ActionResult> PutOrder(PutOrderModel model)
+        {
+            await _repository.Update(model.order);
             return NoContent();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteAll()
+        public class DeleteAllModel
+        {
+            public String accessToken { get; set; }
+        }
+
+        [HttpPost]
+        [Route("delete_all")]
+        public async Task<ActionResult> DeleteAll(DeleteAllModel model)
         {
             await _repository.DeleteAll();
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteOrder(int id)
+        public class DeleteOrderModel
         {
-            var orderToDelete = await _repository.Get(id);
+            public String accessToken { get; set; }
+            public int id { get; set; }
+        }
+
+        [HttpPost]
+        [Route("delete_order")]
+        public async Task<ActionResult> DeleteOrder(DeleteOrderModel model)
+        {
+            var orderToDelete = await _repository.Get(model.id);
             if (orderToDelete == null)
             {
                 return NotFound();
             }
-            await _repository.Delete(id);
+            await _repository.Delete(model.id);
             return NoContent();
         }
 
-        [HttpGet("search/{nomeCliente}")]
-        public async Task<IEnumerable<Order>> searchOrder(string nomeCliente = "")
+        public class SearchOrderModel
         {
-            return await _repository.searchOrder(nomeCliente.ToLower());
+            public String accessToken { get; set; }
+            public String nomeCliente { get; set; } = "";
         }
 
-        [HttpGet("search/{nomeCliente}&{cellNumber}")]
-        public async Task<IEnumerable<Order>> SearchSpecificOrders(string nomeCliente = "", string cellNumber = "") {
-            return await _repository.searchSpecificOrder(nomeCliente, cellNumber);
+        [HttpPost]
+        [Route("search_order")]
+        public async Task<IEnumerable<Order>> SearchOrder(SearchOrderModel model)
+        {
+            return await _repository.searchOrder(model.nomeCliente.ToLower());
         }
 
-        [HttpGet("search/{data}")]
-        public async Task<IEnumerable<Order>> SearchOrdersByDate(string data = "")
+        public class SearchOrderByDateModel
         {
-            return await _repository.searchOrdersByDate(Convert.ToDateTime(data));
+            public String accessToken { get; set; }
+            public String data { get; set; }
+        }
+
+        [HttpPost]
+        [Route("search_order_by_date")]
+        public async Task<IEnumerable<Order>> SearchOrdersByDate(SearchOrderByDateModel model)
+        {
+            return await _repository.searchOrdersByDate(Convert.ToDateTime(model.data));
         }
     }
 }

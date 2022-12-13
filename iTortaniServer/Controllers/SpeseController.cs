@@ -16,72 +16,115 @@ namespace iTortaniServer.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Spese>> GetOrders()
+        public class GetSpeseModel
+        {
+            public String accessToken { get; set; }
+        }
+
+        [HttpPost]
+        [Route("get_spese")]
+        public async Task<IEnumerable<Spese>> GetSpese(GetSpeseModel model)
         {
             return await _repository.GetAll();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Spese>> GetSpesa(int id)
+        public class GetSpesaModel
         {
-            return await _repository.Get(id);
+            public String accessToken { get; set; }
+            public int id { get; set; }
         }
 
         [HttpPost]
-        public async Task<ActionResult<Spese>> PostOrder([FromBody] Spese spesa)
+        [Route("get_spesa")]
+        public async Task<ActionResult<Spese>> GetSpesa(GetSpesaModel model)
         {
-            var newSpesa = await _repository.Create(spesa);
-            return CreatedAtAction(nameof(GetOrders), new { id = newSpesa.Id }, newSpesa);
+            return await _repository.Get(model.id);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> PutOrder(int id, [FromBody] Spese spesa)
+        public class PostSpesaModel
         {
-            if (id != spesa.Id)
-            {
-                return BadRequest();
-            }
+            public String accessToken { get; set; }
+            public Spese spesa { get; set; }
+        }
 
-            await _repository.Update(spesa);
+        [HttpPost]
+        [Route("insert_spesa")]
+        public async Task<ActionResult<Spese>> PostSpesa(PostSpesaModel model)
+        {
+            var newSpesa = await _repository.Create(model.spesa);
+            return CreatedAtAction(nameof(GetSpesa), new { id = newSpesa.Id }, newSpesa);
+        }
+
+        public class PutSpesaModel
+        {
+            public String accessToken { get; set; }
+            public Spese spesa { get; set; }
+        }
+
+        [HttpPost]
+        [Route("update_spesa")]
+        public async Task<ActionResult> PutSpesa(PutSpesaModel model)
+        {
+            await _repository.Update(model.spesa);
 
             return NoContent();
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteAll()
+        public class DeleteAllModel
+        {
+            public String accessToken { get; set; }
+        }
+
+        [HttpPost]
+        [Route("delete_all")]
+        public async Task<ActionResult> DeleteAll(DeleteAllModel model)
         {
             await _repository.DeleteAll();
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteSpesa(int id)
+        public class DeleteSpesaModel
         {
-            var spesaToDelete = await _repository.Get(id);
+            public String accessToken { get; set; }
+            public int id { get; set; }
+        }
+
+        [HttpPost]
+        [Route("delete_spesa")]
+        public async Task<ActionResult> DeleteSpesa(DeleteSpesaModel model)
+        {
+            var spesaToDelete = await _repository.Get(model.id);
             if (spesaToDelete == null)
             {
                 return NotFound();
             }
-            await _repository.Delete(id);
+            await _repository.Delete(model.id);
             return NoContent();
         }
 
-        [HttpGet("search/{nomeCliente}")]
-        public async Task<IEnumerable<Spese>> searchOrder(string nomeCliente = "") {
-            return await _repository.searchOrder(nomeCliente.ToLower());
+        public class SearchSpesaModel
+        {
+            public String accessToken { get; set; }
+            public String nomeCliente { get; set; } = "";
         }
 
-        [HttpGet("search/{nomeCliente}&{cellNumber}")]
-        public async Task<IEnumerable<Spese>> searchSpecificSpesa(string nomeClient = "", string cellNumber = "")
-        {
-            return await _repository.searchSpecificSpesa(nomeClient, cellNumber);
+        [HttpPost]
+        [Route("search_spesa")]
+        public async Task<IEnumerable<Spese>> searchSpesa(SearchSpesaModel model) {
+            return await _repository.searchOrder(model.nomeCliente.ToLower());
         }
 
-        [HttpGet("search/{data}")]
-        public async Task<IEnumerable<Spese>> searchSpeseByDate(string data = "")
+        public class SearchSpeseByDateModel
         {
-            return await _repository.searchSpeseByDate(Convert.ToDateTime(data));
+            public String accessToken { get; set; }
+            public String data { get; set; } = "";
+        }
+
+        [HttpPost]
+        [Route("search_spese_by_date")]
+        public async Task<IEnumerable<Spese>> searchSpeseByDate(SearchSpeseByDateModel model)
+        {
+            return await _repository.searchSpeseByDate(Convert.ToDateTime(model.data));
         }
 
     }
