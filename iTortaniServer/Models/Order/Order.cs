@@ -15,6 +15,7 @@
         public string Description { get; set; } = "";
         public int CellNum { get; set; }
         public DateTime DataRitiro { get; set; }
-        public DateTime? Ritirato { get; set; }
+        public DateTime? Ritirato { get; 
+            set; }
     }
 }

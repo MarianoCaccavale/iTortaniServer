@@ -72,3 +72,8 @@ C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\
 C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
 C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
 C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\nonso\Desktop\Progetto Macelleria\Server\iTortaniServer\iTortaniServer\iTortaniServer\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
