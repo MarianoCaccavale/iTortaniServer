@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTortaniServer.Models.Spese;
 
@@ -10,9 +11,11 @@ using iTortaniServer.Models.Spese;
 namespace iTortaniServer.Migrations
 {
     [DbContext(typeof(SpeseContext))]
-    partial class SpeseContextModelSnapshot : ModelSnapshot
+    [Migration("20221215184844_intToLongCellNum")]
+    partial class intToLongCellNum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -44,7 +47,7 @@ namespace iTortaniServer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("Ritirato")
+                    b.Property<DateTime>("Ritirato")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

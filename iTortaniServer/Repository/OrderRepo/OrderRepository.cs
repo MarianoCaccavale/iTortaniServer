@@ -44,16 +44,6 @@ namespace iTortaniServer.Repository
 
         public async Task<IEnumerable<Order>> GetAll()
         {
-            /*LinkedList<Order> result = new LinkedList<Order>();
-
-            var smt = _context.Orders.GroupBy(order => order.Ritirato != null ? order.Ritirato : new DateTime());
-            foreach (var order in smt)
-            {
-                result.AddFirst(order.First());
-            }
-
-            return result;*/
-
             return await _context.Orders.ToListAsync();
         }
 

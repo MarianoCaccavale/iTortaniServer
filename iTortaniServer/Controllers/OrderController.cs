@@ -68,14 +68,14 @@ namespace iTortaniServer.Controllers
             return NoContent();
         }
 
-        public class DeleteAllModel
+        public class DeleteAllOrdersModel
         {
             public String accessToken { get; set; }
         }
 
         [HttpPost]
         [Route("delete_all")]
-        public async Task<ActionResult> DeleteAll(DeleteAllModel model)
+        public async Task<ActionResult> DeleteAllOrders(DeleteAllOrdersModel model)
         {
             await _repository.DeleteAll();
             return NoContent();

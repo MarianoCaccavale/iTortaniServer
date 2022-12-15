@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using iTortaniServer.Models.Spese;
 
@@ -10,9 +11,11 @@ using iTortaniServer.Models.Spese;
 namespace iTortaniServer.Migrations
 {
     [DbContext(typeof(SpeseContext))]
-    partial class SpeseContextModelSnapshot : ModelSnapshot
+    [Migration("20221215185402_notNullToNullableDataRitiro")]
+    partial class notNullToNullableDataRitiro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");

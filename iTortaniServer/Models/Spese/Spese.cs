@@ -6,7 +6,7 @@
 
         public string Cliente { get; set; } = "";
 
-        public string CellNum { get; set; }
+        public long CellNum { get; set; }
 
         public string Descrizione { get; set; } = "";
 
@@ -16,7 +16,7 @@
 
         public DateTime DataRitiro { get; set; }
 
-        public DateTime Ritirato { get; set; }
+        public DateTime? Ritirato { get; set; }
 
     }
 }
